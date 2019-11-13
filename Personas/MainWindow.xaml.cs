@@ -27,6 +27,7 @@ namespace Personas
             ObservableCollection<Persona> lista = Persona.GetPersonas();
 
             EjemploLista.DataContext = lista;
+            Identificador.DataContext = lista;
         }
     }
 }

@@ -8,26 +8,31 @@
         Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
         <local:ConverterSexo x:Key="convertirSexo"></local:ConverterSexo>
+        
+        <DataTemplate DataType="{x:Type local:Persona}" x:Key="plantilla">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Ellipse Height="50" Width="50" VerticalAlignment="Center"  HorizontalAlignment="Center">
+                    <Ellipse.Fill >
+                        <ImageBrush  ImageSource="{Binding Path=Foto}"  Stretch="UniformToFill"/>
+                    </Ellipse.Fill>
+                </Ellipse>                
+                <TextBlock  Text="{Binding Nombre}"></TextBlock>
+                <Image Source="{Binding Sexo, Converter={StaticResource convertirSexo}}"></Image>
+            </StackPanel>
+        </DataTemplate>
     </Window.Resources>
+    
     <Grid>
-
-        <StackPanel>
-            
-                <ComboBox x:Name="EjemploLista" ItemsSource="{Binding}" Height="35" Width="150" >
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate DataType="{x:Type local:Persona}">
-                            <StackPanel Orientation="Horizontal" >
-                                <Image Height="50" Width="100" Source="{Binding Path=Foto}"></Image>
-                                <TextBlock Text="{Binding Nombre}"></TextBlock>
-                                <Image Source="{Binding Sexo, Converter={StaticResource convertirSexo}}"></Image>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
+        <DockPanel>
+            <StackPanel DockPanel.Dock="Top">
+                <ComboBox x:Name="EjemploLista" ItemsSource="{Binding}" Height="35" Width="150" ItemTemplate="{StaticResource plantilla}" SelectedValuePath="Id" >
                 </ComboBox>
-            
-        </StackPanel>
-        
-        
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock FontSize="20">El identificador del usuario seleccionado es:</TextBlock>
+                <TextBlock x:Name="Identificador" FontSize="20" FontWeight="Bold" Text="{Binding ElementName=EjemploLista, Path=SelectedValue}"></TextBlock>
+            </StackPanel>
+        </DockPanel>
         
     </Grid>
 </Window>
